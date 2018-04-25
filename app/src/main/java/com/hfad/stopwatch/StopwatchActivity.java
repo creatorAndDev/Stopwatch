@@ -19,6 +19,18 @@ public class StopwatchActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stopwatch);
 
+        //Сохранение значений перед уничтожением Activity.
+        //если savedInstanceState получает не null (а это возможно только при втором запуске его,
+        // которое и запускается только при повороте экрана в нашем случае), тогда запускаем возврат
+        //значений что были сохранены в методе onSaveInstanceState
+        if (savedInstanceState != null) {
+            seconds = savedInstanceState.getInt("seconds");
+            running = savedInstanceState.getBoolean("running");
+            //Получить значения
+            //переменных seconds
+            //и running из Bundle.
+        }
+
         //Для обновления секундомера
         //используется отдельный метод.
         //Он запускается при создании
@@ -83,5 +95,14 @@ public class StopwatchActivity extends Activity {
                 handler.postDelayed(this, 1000);
             }
         });
+    }
+
+    //создаем метод для сохранения значений в обьект Bundle, что бы не потерять их при смене
+    //ориентации экрана.
+    //После того как значения переменных были сохранены
+    //в Bundle, их можно будет использовать в методе onCreate().
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putInt("seconds", seconds);
+        savedInstanceState.putBoolean("running", running);
     }
 }
