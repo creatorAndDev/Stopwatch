@@ -105,4 +105,23 @@ public class StopwatchActivity extends Activity {
         savedInstanceState.putInt("seconds", seconds);
         savedInstanceState.putBoolean("running", running);
     }
+
+    //Переопределяем метод onStop. Когда приложение не видимое, наша программа должна остановиться.
+    //В переопределениях
+    //методов жизненного
+    //цикла активности
+    //должен вызываться
+    //метод суперкласса.
+    //Если этого не сделать,
+    //произойдет исключение.
+    @Override
+    protected void onStop() {
+        //Каждый раз, когда вы переопределяете один из методов жиз-
+        //ненного цикла Android, важно начать с вызова версии метода
+        //из суперкласса:
+        super.onStop();
+
+        //ставим флажок что секундомер остановлен
+        running = false;
+    }
 }
