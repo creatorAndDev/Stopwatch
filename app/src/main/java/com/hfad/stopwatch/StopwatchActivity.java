@@ -14,6 +14,9 @@ public class StopwatchActivity extends Activity {
     //проверка флага на запущенный секундомер (true/false)
     private boolean running;
 
+    //флаг
+    private boolean wasRunning;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +29,7 @@ public class StopwatchActivity extends Activity {
         if (savedInstanceState != null) {
             seconds = savedInstanceState.getInt("seconds");
             running = savedInstanceState.getBoolean("running");
+            wasRunning = savedInstanceState.getBoolean("wasRunning");
             //Получить значения
             //переменных seconds
             //и running из Bundle.
@@ -40,7 +44,6 @@ public class StopwatchActivity extends Activity {
 
     //запустить секундомер при щелчке на кнопке Start
     public void onClickStart(View view) {
-
         //ставим флажок что запустился секундомер
         running = true;
     }
@@ -104,6 +107,20 @@ public class StopwatchActivity extends Activity {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putInt("seconds", seconds);
         savedInstanceState.putBoolean("running", running);
+        savedInstanceState.putBoolean("wasRunning", wasRunning);
+    }
+
+    //Реализация метода onStart().
+    //Если секундомер работал, то отсчет времени возобновляется.
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //если работал секундомер, тогда запускаем его и продолжаем его счет, если же нет,
+        //тогда не запускаем.
+        if (wasRunning) {
+            running = true;
+        }
     }
 
     //Переопределяем метод onStop. Когда приложение не видимое, наша программа должна остановиться.
@@ -120,6 +137,9 @@ public class StopwatchActivity extends Activity {
         //ненного цикла Android, важно начать с вызова версии метода
         //из суперкласса:
         super.onStop();
+
+        //Сохранить информацию о том, работал ли секундомер на момент вызова метода onStop().
+        wasRunning = running;
 
         //ставим флажок что секундомер остановлен
         running = false;
