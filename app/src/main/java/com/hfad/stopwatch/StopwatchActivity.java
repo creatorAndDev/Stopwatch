@@ -27,12 +27,10 @@ public class StopwatchActivity extends Activity {
         // которое и запускается только при повороте экрана в нашем случае), тогда запускаем возврат
         //значений что были сохранены в методе onSaveInstanceState
         if (savedInstanceState != null) {
+            //Получить значения переменных seconds, wasRunning и running из Bundle.
             seconds = savedInstanceState.getInt("seconds");
             running = savedInstanceState.getBoolean("running");
             wasRunning = savedInstanceState.getBoolean("wasRunning");
-            //Получить значения
-            //переменных seconds
-            //и running из Bundle.
         }
 
         //Для обновления секундомера
